@@ -1,10 +1,7 @@
 # LABB 3 BINÄRA SÖKTRÄD
-#Christopher Dahlen, Patrinc Ridell
+#Christopher Dahlen, Patric Ridell
 
-# för att kolla i hela sökträdet vill vi söka igenom alla sökvägar och noder.
-# vilket görs med rekursion
-# preorder används till att stoppa in saker i trädet.
-# postorder används när man villstäda i trädet. skräpträd.
+
 #
 class Node(object):
     """docstring for Node"""
@@ -28,8 +25,6 @@ class BinTree(object):
     def __contains__(self,value):
         return finns(self.root,value)
 
-    def __str__(self):
-        return str(self.root)
 
     def put(self,newValue):
 

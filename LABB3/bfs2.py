@@ -1,11 +1,9 @@
-# LABB 3 BINÄRA SÖKTRÄD
-#Christopher Dahlen, Patrinc Ridell
+# Labb _1 breddenförst.
+#Christopher dahlen, Patric Ridell
+import sys
+from parentclass import ParentNode
+from linkedQFile import LinkedQ
 
-# för att kolla i hela sökträdet vill vi söka igenom alla sökvägar och noder.
-# vilket görs med rekursion
-# preorder används till att stoppa in saker i trädet.
-# postorder används när man villstäda i trädet. skräpträd.
-#
 class Node(object):
     """docstring for Node"""
     def __init__(self,value):
@@ -35,9 +33,6 @@ class BinTree(object):
 
         self.root = testputta(self.root,newValue)
         #print(self.root)
-
-
-
 
 def testputta(root, newValue):
 
@@ -80,39 +75,67 @@ def finns(p,value): #
         return finns(p.right,value)
 
 
+def makeChildren(startNode):
+
+    alphabet="abcdefghijklmnopqrstuvxyzåäö"
+    for x in startNode.word:
+        for y in alphabet:
+            newWord=startNode.word
+            newWord=newWord.replace(x,y)
+            #print (newWord)
+            if newWord in svenska and newWord not in gamla and newWord!=startNode.word:
+                gamla.put(newWord)
+                newNode=parentNode(newWord)
+                newWord.parent=startNode # föräldren pekar nedåt
+                q.enqueue(newWord)
+
+
 def main():
 
+    with open("word3.txt", encoding="utf8") as ordlista:
 
-
-    svenska=BinTree() # skapar trädobjekt
-    with open("word3.txt", encoding="utf8") as sweFile:
-        for word in sweFile:
-            sweWord=word.strip()
-            if sweWord in svenska:
-                print (sweWord, end = " ")
+        for word in ordlista:
+            ordet=word.strip()
+            #print (ordet)
+            if ordet in svenska:
+                gamla.put(ordet) # dumträdet
             else:
-                svenska.put(sweWord)
+                svenska.put(ordet)
+
+    startord= input("startord ")
+    slutord= input ("slutord ")
+
+    startNode=ParantNode(startord)
+    q.enqueue(startord)
+
+    try:
+        while not q.isEmpty():
+            nod = q.dequeue()
+            if nod == slutord:
+                writechain(child).
+                #print("det finns en väg till",slutord)
+                #raise Klar(kejda)
+            else:
+                makeChildren(nod)
+    except: # ändra här.. den vill inte hoppa in här
+        sys.exit("some error message")
+        #print("Det finns ABSOLUT INGEN väg till", slutord)
 
 
-    engelska=BinTree()
-    with open("engelska.txt", encoding="utf8") as engFile:
-        for x in engFile:
-            row=x.split()
-            for i in row:
-                engWord=i
-                if engWord in engelska:
-                    pass
-                else:
-                    if engWord in svenska:
-                        engelska.put(engWord)
-                        print(engWord, end = " ")
-                    else:
-                        pass
 
-    #svenska.put(banan)
 
-    #svenska.contains(gurka)
-    #svenska.write()
+
+
+# måste skapa en raise för när det inte finns någon väg.
+
+def Klar(Exception):
+    """docstring for felmeddelnade"""
+    pass
+
+svenska=BinTree() # skapar trädobjekt GLOBALA HAHA
+gamla = BinTree() #dumbarn
+q=LinkedQ() ## skapar kön
+
 
 if __name__ == '__main__':
     main()
